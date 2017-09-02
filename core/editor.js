@@ -53,7 +53,7 @@ class Editor {
         }
         scrollLength += length;
       }
-      Object.keys(attributes).forEach((name) => {
+      Object.keys(attributes).reverse().forEach((name) => {
         this.scroll.formatAt(index, length, name, attributes[name]);
       });
       return index + length;

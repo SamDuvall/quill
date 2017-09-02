@@ -184,7 +184,7 @@ function deltaEndsWith(delta, text) {
 function isLine(node) {
   if (node.childNodes.length === 0) return false;   // Exclude embed blocks
   let style = computeStyle(node);
-  return ['block', 'list-item'].indexOf(style.display) > -1;
+  return ['block', 'list-item', 'table-cell'].indexOf(style.display) > -1;
 }
 
 function traverse(node, elementMatchers, textMatchers) {  // Post-order

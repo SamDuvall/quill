@@ -1,3 +1,7 @@
+# b1.3.4.x
+
+- Blissbook specific changes
+
 # 1.3.4
 
 - Loosen dependency specification [#1748](https://github.com/quilljs/quill/issues/1748)

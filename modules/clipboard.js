@@ -72,10 +72,10 @@ class Clipboard extends Module {
     this.matchers.push([selector, matcher]);
   }
 
-  convert(html) {
+  convert(html, source) {
     if (typeof html === 'string') {
       this.container.innerHTML = html.replace(/\>\r?\n +\</g, '><'); // Remove spaces between tags
-      return this.convert();
+      return this.convert(undefined, source);
     }
     const formats = this.quill.getFormat(this.quill.selection.savedRange.index);
     if (formats[CodeBlock.blotName]) {
@@ -96,9 +96,9 @@ class Clipboard extends Module {
 
   dangerouslyPasteHTML(index, html, source = Quill.sources.API) {
     if (typeof index === 'string') {
-      return this.quill.setContents(this.convert(index), html);
+      return this.quill.setContents(this.convert(index, source), html);
     } else {
-      let paste = this.convert(html);
+      let paste = this.convert(html, source);
       return this.quill.updateContents(new Delta().retain(index).concat(paste), source);
     }
   }
@@ -111,7 +111,7 @@ class Clipboard extends Module {
     this.container.focus();
     this.quill.selection.update(Quill.sources.SILENT);
     setTimeout(() => {
-      delta = delta.concat(this.convert()).delete(range.length);
+      delta = delta.concat(this.convert(undefined, Quill.sources.USER)).delete(range.length);
       this.quill.updateContents(delta, Quill.sources.USER);
       // range.length contributes to delta.length()
       this.quill.setSelection(delta.length() - range.length, Quill.sources.SILENT);
